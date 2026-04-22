@@ -5,14 +5,14 @@ require "../controller/OrderController.php";
 
 header("Content-Type: application/json");
 
-// Validasi session
+
 if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'kasir') {
     echo json_encode(['success' => false, 'message' => 'Unauthorized access']);
     exit;
 }
 
 try {
-    // Get POST data
+   
     $data = json_decode(file_get_contents('php://input'), true);
 
     if (!$data || !isset($data['order_id'])) {
@@ -23,10 +23,10 @@ try {
     $order_id = (int)$data['order_id'];
     $outlet_code = $_SESSION['outlet_code'] ?? 'BRG-1024';
 
-    // Initialize OrderController
+    
     $orderController = new OrderController($conn, $outlet_code);
 
-    // Complete the order
+   
     $result = $orderController->completeOrder($order_id);
 
     echo json_encode($result);
