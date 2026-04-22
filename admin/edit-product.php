@@ -15,13 +15,13 @@
   $outlet_code = $_SESSION['outlet_code'];
   $product_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
-  // Validasi product ID
+
   if (!$product_id) {
       header("Location: " . $BASE_URL . "admin/dashboard.php");
       exit;
   }
 
-  // Ambil data product
+ 
   $query = mysqli_query($conn, "SELECT * FROM product WHERE id = '$product_id' AND outlet_code = '$outlet_code'");
   
   if (mysqli_num_rows($query) === 0) {
@@ -54,7 +54,7 @@
           $error = true;
           $err_message = "All fields must be filled.";
       } else {
-          // Jika ada gambar baru yang diupload
+        
           if (!empty($_FILES['image']['name'])) {
               $image = $_FILES['image'];
               $fileTmp  = $image['tmp_name'];
@@ -96,7 +96,7 @@
                   }
               }
           } else {
-              // Update tanpa mengubah gambar
+              
               $update_query = mysqli_query($conn, "
                   UPDATE product
                   SET product_name = '$product_name',
