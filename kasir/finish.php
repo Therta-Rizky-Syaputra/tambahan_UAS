@@ -13,13 +13,13 @@
         exit;
     }
 
-    // Get outlet code from session
-    $outlet_code = $_SESSION['outlet_code'] ?? 'BRG-1024'; // Default fallback
+  
+    $outlet_code = $_SESSION['outlet_code'] ?? 'BRG-1024'; 
 
-    // Initialize OrderController
+   
     $orderController = new OrderController($conn, $outlet_code);
 
-    // Get completed orders
+    
     $completedOrders = $orderController->getCompletedOrders();
 ?>
 
