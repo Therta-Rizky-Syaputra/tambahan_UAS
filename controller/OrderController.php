@@ -1,8 +1,5 @@
 <?php
-/**
- * Order Controller
- * Handles all order-related operations for kasir
- */
+
 
 class OrderController {
     private $conn;
@@ -13,9 +10,7 @@ class OrderController {
         $this->outlet_code = $outlet_code;
     }
 
-    /**
-     * Get all pending orders for the outlet
-     */
+   
     public function getPendingOrders() {
         $query = mysqli_query($this->conn, "
             SELECT o.*, GROUP_CONCAT(
@@ -40,9 +35,7 @@ class OrderController {
         ];
     }
 
-    /**
-     * Get all completed orders for the outlet
-     */
+   
     public function getCompletedOrders() {
         $query = mysqli_query($this->conn, "
             SELECT o.*, GROUP_CONCAT(
@@ -67,9 +60,7 @@ class OrderController {
         ];
     }
 
-    /**
-     * Get order details by ID
-     */
+   
     public function getOrderById($order_id) {
         // Get order info
         $order_query = mysqli_query($this->conn, "
@@ -85,7 +76,7 @@ class OrderController {
 
         $order = mysqli_fetch_assoc($order_query);
 
-        // Get order items
+       
         $items_query = mysqli_query($this->conn, "
             SELECT * FROM order_items WHERE order_id = '$order_id' ORDER BY id
         ");
@@ -103,9 +94,7 @@ class OrderController {
         ];
     }
 
-    /**
-     * Complete an order (mark as completed)
-     */
+   
     public function completeOrder($order_id) {
         // Check if order exists and belongs to outlet
         $check = $this->getOrderById($order_id);
@@ -123,7 +112,7 @@ class OrderController {
             ];
         }
 
-        // Update order status
+       
         $query = mysqli_query($this->conn, "
             UPDATE orders
             SET status = 'completed', completed_at = NOW()
@@ -143,9 +132,7 @@ class OrderController {
         }
     }
 
-    /**
-     * Cancel an order
-     */
+   
     public function cancelOrder($order_id) {
         // Check if order exists and belongs to outlet
         $check = $this->getOrderById($order_id);
@@ -163,7 +150,7 @@ class OrderController {
             ];
         }
 
-        // Update order status
+       
         $query = mysqli_query($this->conn, "
             UPDATE orders
             SET status = 'cancelled'
@@ -183,9 +170,7 @@ class OrderController {
         }
     }
 
-    /**
-     * Get order statistics
-     */
+   
     public function getOrderStats() {
         $query = mysqli_query($this->conn, "
             SELECT
